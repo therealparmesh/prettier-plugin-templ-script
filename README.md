@@ -1,6 +1,6 @@
 # prettier-plugin-templ-script
 
-> Prettier plugin for `<script>` tags in templ.
+> Prettier plugin for `<script>` elements in templ.
 
 ## Install
 
