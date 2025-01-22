@@ -19,11 +19,17 @@ export const printers = {
   templ: {
     print: async (path, options) => {
       const { text } = path.getValue();
-      const matches = text.matchAll(/^(\s*)<script>([\s\S]+?)<\/script>$/gm);
+      const scriptRegex = /^(\s*)<script([^>]*?)>([\s\S]+?)<\/script>$/gm;
+      const matches = text.matchAll(scriptRegex);
       let transformedText = text;
 
       try {
-        for (const [match, leadingWhitespace, scriptContent] of matches) {
+        for (const [
+          match,
+          leadingWhitespace,
+          scriptAttributes,
+          scriptContent,
+        ] of matches) {
           const formattedScript = await prettier.format(scriptContent.trim(), {
             ...options,
             parser: 'acorn',
@@ -35,7 +41,7 @@ export const printers = {
             .map((line) => `${leadingWhitespace}\t${line}`)
             .join('\n');
 
-          const replacementScript = `${leadingWhitespace}<script>\n${indentedScript}\n${leadingWhitespace}</script>`;
+          const replacementScript = `${leadingWhitespace}<script${scriptAttributes}>\n${indentedScript}\n${leadingWhitespace}</script>`;
           transformedText = transformedText.replace(match, replacementScript);
         }
       } catch (err) {
