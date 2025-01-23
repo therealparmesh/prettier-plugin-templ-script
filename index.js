@@ -19,7 +19,7 @@ export const printers = {
   templ: {
     print: async (path, options) => {
       const { text } = path.getValue();
-      const scriptRegex = /^(\s*)<script([^>]*)>([\s\S]+?)<\/script>$/gm;
+      const scriptRegex = /^(\s*)<script([\s\S]*?)>\n([\s\S]*?)<\/script>/gm;
       const matches = text.matchAll(scriptRegex);
       let transformedText = text;
 
@@ -30,6 +30,10 @@ export const printers = {
           scriptAttributes,
           scriptContent,
         ] of matches) {
+          if (!scriptContent.trim()) {
+            continue;
+          }
+
           const formattedScript = await prettier.format(scriptContent.trim(), {
             ...options,
             parser: 'acorn',
