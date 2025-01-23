@@ -2,6 +2,8 @@
 
 > Prettier plugin for `<script>` elements in templ.
 
+**Note:** This cannot work with nested `<script>` elements.
+
 ## Install
 
 ```sh
