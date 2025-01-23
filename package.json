@@ -2,7 +2,10 @@
   "name": "prettier-plugin-templ-script",
   "version": "0.0.3",
   "description": "Prettier plugin for `<script>` elements in templ.",
-  "repository": "github:therealparmesh/prettier-plugin-templ-script",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/therealparmesh/prettier-plugin-templ-script.git"
+  },
   "license": "MIT",
   "author": "Parmesh Krishen",
   "type": "module",
