@@ -51,7 +51,7 @@ export const printers = {
         }
       } catch (err) {
         console.error('Error formatting script:', err.message);
-        return text;
+        throw err;
       }
 
       return transformedText;
