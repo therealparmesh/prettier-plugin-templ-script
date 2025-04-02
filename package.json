@@ -1,6 +1,6 @@
 {
   "name": "prettier-plugin-templ-script",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Prettier plugin for `<script>` elements in templ.",
   "repository": {
     "type": "git",
