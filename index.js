@@ -19,7 +19,7 @@ export const printers = {
   templ: {
     print: async (path, options) => {
       const { text } = path.getValue();
-      const scriptRegex = /^(\s*)<script([\s\S]*?)>\n([\s\S]*?)<\/script>/gm;
+      const scriptRegex = /^(\s*)<script([\s\S]*?)>(\n([\s\S]*?))?<\/script>/gm;
       const matches = text.matchAll(scriptRegex);
       let transformedText = text;
 
@@ -28,9 +28,10 @@ export const printers = {
           match,
           leadingWhitespace,
           scriptAttributes,
+          _,
           scriptContent,
         ] of matches) {
-          if (!scriptContent.trim()) {
+          if (!scriptContent?.trim()) {
             continue;
           }
 
