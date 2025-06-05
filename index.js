@@ -12,6 +12,8 @@ export const parsers = {
   templ: {
     parse: (text) => ({ text }),
     astFormat: 'templ',
+    locStart: () => 0,
+    locEnd: (node) => node.text.length,
   },
 };
 
@@ -22,6 +24,10 @@ export const printers = {
       const scriptRegex = /^(\s*)<script([\s\S]*?)>(\n([\s\S]*?))?<\/script>/gm;
       const matches = text.matchAll(scriptRegex);
       let transformedText = text;
+
+      const singleIndent = options.useTabs
+        ? '\t'
+        : ' '.repeat(options.tabWidth);
 
       try {
         for (const [
@@ -43,18 +49,30 @@ export const printers = {
           const indentedScript = formattedScript
             .trim()
             .split('\n')
-            .map((line) => `${leadingWhitespace}\t${line}`)
+            .map((line) => `${leadingWhitespace}${singleIndent}${line}`)
             .join('\n');
 
           const replacementScript = `${leadingWhitespace}<script${scriptAttributes}>\n${indentedScript}\n${leadingWhitespace}</script>`;
           transformedText = transformedText.replace(match, replacementScript);
         }
       } catch (err) {
-        console.error('Error formatting script:', err.message);
+        console.error(
+          `Error formatting script content within .templ file: ${err.message}`,
+        );
+
+        if (err.loc) {
+          console.error(
+            `Location: Line ${err.loc.start.line}, Column ${err.loc.start.column}`,
+          );
+        }
         throw err;
       }
 
       return transformedText;
     },
   },
+};
+
+export const defaultOptions = {
+  useTabs: true,
 };
