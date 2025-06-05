@@ -73,6 +73,4 @@ export const printers = {
   },
 };
 
-export const defaultOptions = {
-  useTabs: true,
-};
+export const defaultOptions = { useTabs: true };
