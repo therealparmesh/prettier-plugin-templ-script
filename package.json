@@ -2,6 +2,15 @@
   "name": "prettier-plugin-templ-script",
   "version": "0.2.1",
   "description": "Prettier plugin for .templ files with script element and class attribute formatting.",
+  "keywords": [
+    "prettier",
+    "plugin",
+    "templ",
+    "script",
+    "javascript",
+    "class",
+    "css"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/therealparmesh/prettier-plugin-templ-script.git"
