@@ -22,21 +22,23 @@ export const printers = {
     print: async (path, options) => {
       const { text } = path.getValue();
       const scriptRegex = /^(\s*)<script([\s\S]*?)>(\n([\s\S]*?))?<\/script>/gm;
-      const matches = text.matchAll(scriptRegex);
+      const classAttrRegex =
+        /class="[^"\\]*(?:\\.[^"\\]*)*"|class='[^'\\]*(?:\\.[^'\\]*)*'/g;
       let transformedText = text;
-
       const singleIndent = options.useTabs
         ? '\t'
         : ' '.repeat(options.tabWidth);
 
       try {
+        const scriptMatches = transformedText.matchAll(scriptRegex);
+
         for (const [
           match,
           leadingWhitespace,
           scriptAttributes,
           _,
           scriptContent,
-        ] of matches) {
+        ] of scriptMatches) {
           if (!scriptContent?.trim()) {
             continue;
           }
@@ -45,13 +47,11 @@ export const printers = {
             ...options,
             parser: 'acorn',
           });
-
           const indentedScript = formattedScript
             .trim()
             .split('\n')
             .map((line) => `${leadingWhitespace}${singleIndent}${line}`)
             .join('\n');
-
           const replacementScript = `${leadingWhitespace}<script${scriptAttributes}>\n${indentedScript}\n${leadingWhitespace}</script>`;
           transformedText = transformedText.replace(match, replacementScript);
         }
@@ -66,6 +66,27 @@ export const printers = {
           );
         }
         throw err;
+      }
+
+      try {
+        const classMatches = transformedText.matchAll(classAttrRegex);
+
+        for (const [match] of classMatches) {
+          const tempHtml = `<div ${match}></div>`;
+          const formattedHtml = await prettier.format(tempHtml, {
+            ...options,
+            parser: 'html',
+          });
+          const classMatch = formattedHtml.match(classAttrRegex);
+
+          if (classMatch?.[0] !== match) {
+            transformedText = transformedText.replace(match, classMatch[0]);
+          }
+        }
+      } catch (err) {
+        console.error(
+          `Error formatting class attributes within .templ file: ${err.message}`,
+        );
       }
 
       return transformedText;
