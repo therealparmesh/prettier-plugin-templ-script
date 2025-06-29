@@ -1,6 +1,6 @@
 {
   "name": "prettier-plugin-templ-script",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Prettier plugin for .templ files with script element and class attribute formatting.",
   "keywords": [
     "prettier",
