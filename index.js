@@ -1,5 +1,10 @@
 import prettier from 'prettier';
 
+const scriptRegex = /^(\s*)<script([\s\S]*?)>(\n([\s\S]*?))?<\/script>/gm;
+
+const classAttrRegex =
+  /class="[^"\\]*(?:\\.[^"\\]*)*"|class='[^'\\]*(?:\\.[^'\\]*)*'/g;
+
 export const languages = [
   {
     name: 'templ',
@@ -21,9 +26,6 @@ export const printers = {
   templ: {
     print: async (path, options) => {
       const { text } = path.getValue();
-      const scriptRegex = /^(\s*)<script([\s\S]*?)>(\n([\s\S]*?))?<\/script>/gm;
-      const classAttrRegex =
-        /class="[^"\\]*(?:\\.[^"\\]*)*"|class='[^'\\]*(?:\\.[^'\\]*)*'/g;
       let transformedText = text;
       const singleIndent = options.useTabs
         ? '\t'
@@ -65,6 +67,7 @@ export const printers = {
             `Location: Line ${err.loc.start.line}, Column ${err.loc.start.column}`,
           );
         }
+
         throw err;
       }
 
