@@ -20,9 +20,7 @@
   "type": "module",
   "main": "index.js",
   "files": [
-    "index.js",
-    "README.md",
-    "LICENSE"
+    "index.js"
   ],
   "prettier": {
     "plugins": [
