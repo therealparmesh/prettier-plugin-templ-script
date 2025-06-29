@@ -19,8 +19,20 @@
   "author": "Parmesh Krishen",
   "type": "module",
   "main": "index.js",
+  "files": [
+    "index.js",
+    "README.md",
+    "LICENSE"
+  ],
   "prettier": {
+    "plugins": [
+      "prettier-plugin-tailwindcss"
+    ],
     "singleQuote": true
+  },
+  "devDependencies": {
+    "prettier": "^3.0.0",
+    "prettier-plugin-tailwindcss": "^0.6.0"
   },
   "peerDependencies": {
     "prettier": "*"

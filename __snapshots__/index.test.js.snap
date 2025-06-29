@@ -1,0 +1,46 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should format JavaScript in script elements 1`] = `
+"<div>
+	<script>
+		(() => {
+			console.log('Hello world');
+		})();
+	</script>
+</div>"
+`;
+
+exports[`should format class attributes (Tailwind CSS ordering example) 1`] = `
+"<div class="bg-red-500 p-4 text-white hover:bg-red-600">
+	Content
+</div>"
+`;
+
+exports[`should format JavaScript in script elements and class attributes (Tailwind CSS ordering example) 1`] = `
+"<div class="bg-blue-500 p-4 text-white hover:bg-blue-600">
+	<script>
+		(() => {
+			console.log('Combined test');
+			const x = 1;
+			if (x > 0) {
+				console.log('Hello world');
+			}
+		})();
+	</script>
+</div>"
+`;
+
+exports[`should handle mutliple script elements 1`] = `
+"<div>
+	<script>
+		(() => {
+			console.log('First script');
+		})();
+	</script>
+	<script>
+		(() => {
+			console.log('Second script');
+		})();
+	</script>
+</div>"
+`;
