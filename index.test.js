@@ -38,13 +38,42 @@ test('should format JavaScript in script elements and class attributes (Tailwind
   expect(result).toMatchSnapshot();
 });
 
-test('should handle mutliple script elements', async () => {
+test('should handle multiple script elements', async () => {
   const input = `<div>
 	<script>
 		(()=>{console.log("First script");})();
 	</script>
 	<script>
 		(()=>{console.log("Second script");})();
+	</script>
+</div>`;
+  const result = await formatTempl(input);
+  expect(result).toMatchSnapshot();
+});
+
+test('should handle empty script tag', async () => {
+  const input = `<div>
+	<script>
+	</script>
+</div>`;
+  const result = await formatTempl(input);
+  expect(result).toMatchSnapshot();
+});
+
+test('should format JavaScript in script elements with attributes', async () => {
+  const input = `<div>
+	<script type="module">
+		import{log}from"./utils.js";log("Hello from module");const data={x:1,y:2};console.log(data);
+	</script>
+</div>`;
+  const result = await formatTempl(input);
+  expect(result).toMatchSnapshot();
+});
+
+test('should format JSON in script elements with type="importmap"', async () => {
+  const input = `<div>
+	<script type="importmap">
+		{"imports":{"react":"https://cdn.skypack.dev/react","lodash":"https://cdn.skypack.dev/lodash"}}
 	</script>
 </div>`;
   const result = await formatTempl(input);

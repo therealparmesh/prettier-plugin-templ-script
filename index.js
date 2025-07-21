@@ -47,7 +47,9 @@ export const printers = {
 
           const formattedScript = await prettier.format(scriptContent.trim(), {
             ...options,
-            parser: 'acorn',
+            parser: scriptAttributes.toLowerCase().includes('type="importmap"')
+              ? 'json'
+              : 'acorn',
           });
           const indentedScript = formattedScript
             .trim()

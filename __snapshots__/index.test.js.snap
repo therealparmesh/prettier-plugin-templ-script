@@ -44,3 +44,49 @@ exports[`should handle mutliple script elements 1`] = `
 	</script>
 </div>"
 `;
+
+exports[`should handle empty script tag 1`] = `
+"<div>
+	<script>
+	</script>
+</div>"
+`;
+
+exports[`should format JavaScript in script elements with attributes 1`] = `
+"<div>
+	<script type="module">
+		import { log } from './utils.js';
+		log('Hello from module');
+		const data = { x: 1, y: 2 };
+		console.log(data);
+	</script>
+</div>"
+`;
+
+exports[`should format JSON in script elements with type="importmap" 1`] = `
+"<div>
+	<script type="importmap">
+		{
+			"imports": {
+				"react": "https://cdn.skypack.dev/react",
+				"lodash": "https://cdn.skypack.dev/lodash"
+			}
+		}
+	</script>
+</div>"
+`;
+
+exports[`should handle multiple script elements 1`] = `
+"<div>
+	<script>
+		(() => {
+			console.log('First script');
+		})();
+	</script>
+	<script>
+		(() => {
+			console.log('Second script');
+		})();
+	</script>
+</div>"
+`;
