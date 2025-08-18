@@ -1,4 +1,4 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`should format JavaScript in script elements 1`] = `
 "<div>
@@ -30,7 +30,7 @@ exports[`should format JavaScript in script elements and class attributes (Tailw
 </div>"
 `;
 
-exports[`should handle mutliple script elements 1`] = `
+exports[`should handle multiple script elements 1`] = `
 "<div>
 	<script>
 		(() => {
@@ -76,17 +76,30 @@ exports[`should format JSON in script elements with type="importmap" 1`] = `
 </div>"
 `;
 
-exports[`should handle multiple script elements 1`] = `
-"<div>
+exports[`should format both script elements and class attributes when templMode is both 1`] = `
+"<div class="bg-green-500 p-4 text-white hover:bg-green-600">
 	<script>
 		(() => {
-			console.log('First script');
+			console.log('Hello world');
 		})();
 	</script>
+</div>"
+`;
+
+exports[`should only format script elements when templMode is script-only 1`] = `
+"<div class="hover:bg-red-600 bg-red-500 text-white p-4">
 	<script>
 		(() => {
-			console.log('Second script');
+			console.log('Hello world');
 		})();
+	</script>
+</div>"
+`;
+
+exports[`should only format class attributes when templMode is class-only 1`] = `
+"<div class="bg-blue-500 p-4 text-white hover:bg-blue-600">
+	<script>
+	  (()=>{console.log("Hello world");})();
 	</script>
 </div>"
 `;

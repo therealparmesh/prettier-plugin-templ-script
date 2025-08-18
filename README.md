@@ -22,3 +22,20 @@ npm install --save-dev prettier-plugin-templ-script
   "plugins": ["prettier-plugin-templ-script"]
 }
 ```
+
+## Configuration
+
+### `templMode`
+
+Control which parts of templ files to format.
+
+- `"both"` (default) - Format both script and class attributes
+- `"script-only"` - Format only script elements
+- `"class-only"` - Format only class attributes
+
+```json
+{
+  "plugins": ["prettier-plugin-templ-script"],
+  "templMode": "both"
+}
+```
